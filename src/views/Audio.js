@@ -4,7 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useContext } from "react";
 import { AuthContext} from "../context/AuthProvider";
-
+import Nav from "../components/Nav";
 
 
 const UPLOAD_ENDPOINT = "http://127.0.0.1:5000/sasurl";
@@ -12,6 +12,7 @@ const TRANSCRIPTION_ENDPOINT = "http://127.0.0.1:5000/api"
 
 
 const Audio = () => {
+  
     const { user } = useContext(AuthContext);
    
 
@@ -61,8 +62,8 @@ const Audio = () => {
    
 
     return (
-      
-        
+      <>
+      <Nav />
         <form onSubmit={handleSubmit}>
         <h1> File Upload</h1>
         <input type="file" accept=".wav" name="filename" className="file-input file-input-bordered file-input-secondary w-full max-w-xs"onChange={(e) => {setFilename(e.target.files[0].name); setFile(e.target.files[0])}}  />
@@ -72,6 +73,7 @@ const Audio = () => {
         </button>
         {status ? <h1>{status}</h1> : null}
         </form>
+        </>
        
         
     );
