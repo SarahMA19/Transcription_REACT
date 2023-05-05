@@ -26,7 +26,7 @@ function App() {
       
         <Routes>
           <Route path="/" element={<HomeView />} />
-          <Route path="audio" element={<Audio />} />
+          <Route path="/audio" element={<Audio />} />
     
         </Routes>
       

@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 
 
+
 const SignInButton = ({ user, logout }) => {
     return (
         <div className="navbar-end">
@@ -15,7 +16,7 @@ const SignInButton = ({ user, logout }) => {
 const Nav = () => {
 
     const {user, login, logout} = useContext(AuthContext);
-    console.log(user)
+ 
     
 
   return (
@@ -29,7 +30,7 @@ const Nav = () => {
               </label>
               <ul tabIndex={0} className="dropdown-content mt-1 w-52 menu menu-compact p-2 bg-base-200 shadow rounded-box">
                 <li><a href="#!">Home</a></li>
-                <li><a href="#!">Services</a></li>
+                <li><a href="/audio">Services</a></li>
                 <li><a href="#!">About</a></li>
               </ul>
             </div>
@@ -38,7 +39,7 @@ const Nav = () => {
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal p-0 font-medium">
               <li><a href="#!">Home</a></li>
-              <li><a href="#!">Services</a></li>
+              <li><a href="/audio">Services</a></li>
               <li><a href="#!">About</a></li>
             </ul>
           </div>
