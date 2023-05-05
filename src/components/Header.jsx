@@ -3,14 +3,14 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import { BsFillCartFill } from 'react-icons/bs';
 import { FaUser } from 'react-icons/fa';
-import { BrowserRouter } from "react-router-dom";
+
 
 const SignInButton = ({ user, logout }) => {
     return (
         <div className="navbar-end">
             <p alt={user.displayName}></p>
-            
-        </div>
+        <button className="btn btn-secondary" onClick={logout}>Sign out</button>
+      </div>
     );
   };
 
