@@ -7,7 +7,7 @@ import axios from "axios";
 import { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa"
 import { FiEye } from "react-icons/fi"
-import dayjs from "dayjs";
+
 
 
 
@@ -16,7 +16,10 @@ import dayjs from "dayjs";
 
 export default function Table (){
   const {user} = useContext(AuthContext);
+  console.log(user)
   const [transcriptions, setTranscriptions] = useState([]);
+  const id = transcriptions
+ 
   
  
   async function tableInfo() {
@@ -26,18 +29,40 @@ export default function Table (){
           "Access-Control-Allow-Origin": "*",
       }; console.log(user.uid)
   
-      const res = await axios.get(WEB_URL + "/api/transcriptions?uid=" + "6wNvAnZUhLMUPFmnO6r3P8IkhH53", headers);
+      const res = await axios.get(WEB_URL + "/api/transcriptions?uid=" + user.uid, headers);
         console.log(res);
         if (res.data.status === "ok"){
           const newTranscriptions = res.data.transcription;
+          console.log(newTranscriptions)
           setTranscriptions(newTranscriptions)
 
         }
     
       } ;
       useEffect(() => {
-        tableInfo()
-      }, []);
+        if (user.loggedIn){
+          tableInfo()
+        }
+      }, [user]);
+
+      async function handleRemove(id){
+      const headers = {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      }; console.log(user.uid)
+
+      const res = await axios.delete(WEB_URL + "/api/transcriptions/" + id,  headers);
+      if (res.data.status === "ok"){const newTranscriptions = res.data.transcription;
+        console.log(newTranscriptions)
+        setTranscriptions(newTranscriptions)
+      }
+      }
+     
+
+      
+
+
+      
 
     return (
     <div>
@@ -76,7 +101,7 @@ export default function Table (){
                     <button className="btn btn-ghost btn-md"><FiEye size={32} /></button>
                   </th>
                   <th>
-                    <button className="btn btn-ghost btn-md"><FaTrashAlt size={32} /></button>
+                    <button className="btn btn-ghost btn-md" onClick={() => handleRemove(transcription.id)} ><FaTrashAlt size={32} /></button>
                   </th>
                </tr>
               </tbody>
