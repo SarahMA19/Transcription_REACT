@@ -2,22 +2,19 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 
 
-
 const SignInButton = ({ user, logout }) => {
-    return (
-        <div className="navbar-end">
-            <p alt={user.displayName}></p>
-        <button className="btn btn-secondary" onClick={logout}>Sign out</button>
-      </div>
-    );
-  };
+  return (
+      <div className="navbar-end">
+          <p alt={user.displayName}></p>
+      <button className="btn btn-secondary" onClick={logout}>Sign out</button>
+    </div>
+  );
+};
 
 
 const Nav = () => {
-
     const {user, login, logout} = useContext(AuthContext);
- 
-    
+
 
   return (
     <header className='bg-base-100 py-2 sticky top-0 z-50'>

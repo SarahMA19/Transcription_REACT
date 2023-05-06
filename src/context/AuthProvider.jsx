@@ -5,11 +5,12 @@ import {
   onAuthStateChanged,
   signInWithPopup,
   signOut,
+  browserSessionPersistence,
+  setPersistence,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { WEB_URL } from "../lib/CONSTENTS";
-
 
 
 
@@ -20,20 +21,35 @@ export const AuthProvider = ({ children }) => {
     loggedIn: false,
   });
   
-
-
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
-  provider.setCustomParameters({
-  prompt: 'select_account'
-} );
 
+  provider.setCustomParameters({
+    prompt: 'select_account'
+  } );
+
+  
+  setPersistence(auth, browserSessionPersistence)
+    .then(() => {
+      // Existing and future Auth states are now persisted in the current
+      // session only. Closing the window would clear any existing state even
+      // if a user forgets to sign out.
+      // ...
+      // New sign-in will be persisted with session persistence.
+      return signInWithPopup(auth);
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
 
   async function postLogin(user) {
     const body = {
       uid: user.uid,
       displayName: user.displayName,
-      email : user.email
+      email: user.email,
+      container_name: user.container_name,
     };
 
     const headers = {
@@ -42,7 +58,7 @@ export const AuthProvider = ({ children }) => {
         "Access-Control-Allow-Origin": "*",
     };
 
-    const res = await axios.post(WEB_URL + "/users", body, headers);
+    const res = await axios.post(WEB_URL + '/api/users', body, headers);
     console.log("After sign in: ", user);
     console.log(res);
   }
@@ -53,6 +69,7 @@ export const AuthProvider = ({ children }) => {
     signInWithPopup(auth, provider)
       .then(({ user }) => {
         postLogin(user);
+        console.log(user);
         toast.remove("signin");
         toast.success("Signed in successfully!🤩");
       })

@@ -1,14 +1,12 @@
 import React from "react";
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import { WEB_URL } from "../lib/CONSTENTS";
 import axios from "axios";
 import { useState } from "react";
-import {FaTrashAlt} from "react-icons/fa"
+import { FaTrashAlt } from "react-icons/fa"
 import { FiEye } from "react-icons/fi"
-
-
 
 
 
@@ -140,4 +138,3 @@ export default function Table (){
     )
 
 };
-

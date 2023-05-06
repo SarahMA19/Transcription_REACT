@@ -15,8 +15,8 @@ const SignInButton = ({ user, logout }) => {
   };
 
 
-const Header = () => {
 
+const Header = () => {
     const {user, login, logout} = useContext(AuthContext);
    
     return (
@@ -60,10 +60,14 @@ const Header = () => {
                                 </li>
                                 <li><a>Settings</a></li>
                                 {user.loggedIn ? (
-                                    <SignInButton className="text-xs" user={user} logout={logout} />
+                                    <SignInButton user={user} logout={logout} />
                                 ) : (
-                                    <li><a>Logout</a></li>
+                                    <button className="btn btn-secondary mt-1 w-51 max-h-96 overflow-y-auto p-2 shadow rounded-box" onClick={login}>
+                                        Get Started
+                                    </button>
                                 )}
+                               
+            
                             </ul>
                         </div>
 
@@ -82,6 +86,6 @@ const Header = () => {
 
 }
 
+export default Header
 
 
-export default Header;

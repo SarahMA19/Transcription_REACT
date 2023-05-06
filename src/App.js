@@ -1,16 +1,9 @@
-import 'bootstrap-icons/font/bootstrap-icons.json'
+
 import { Toaster } from "react-hot-toast";
 import { Route, Routes } from "react-router-dom";
-
-
-
 import "./styles/globals.css";
 import HomeView from "./views/HomeView";
 import Audio from "./views/Audio";
-
-
-
-
 
 
 

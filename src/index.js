@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { AuthProvider } from "./context/AuthProvider";
-import { app } from './firebase'
+import { app } from "./firebase";
 
 // eslint-disable-next-line
 const justToUseApp = app;
