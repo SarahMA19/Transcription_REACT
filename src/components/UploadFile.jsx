@@ -5,10 +5,20 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import upload from "../static/upload.jpg"
 
-const UPLOAD_ENDPOINT = "http://127.0.0.1:5000/sasurl";
-const TRANSCRIPTION_ENDPOINT = "http://127.0.0.1:5000/api"
+import HomeView from "../views/HomeView";
+
+const UPLOAD_ENDPOINT = "http://127.0.0.1:5000/api/sasurl";
+const TRANSCRIPTION_ENDPOINT = "http://127.0.0.1:5000/api/transcription"
 
 export default function UploadFile() {
+
+    
+ 
+
+
+
+
+
     const { user } = useContext(AuthContext);
     const [container_name, setContainer_name] = useState("");
     const [filename, setFilename] = useState("");

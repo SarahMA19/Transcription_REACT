@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }) => {
       } else {
         setUser({
           loggedIn: false,
-        });
+        });console.log(user)
       }
     });
   }, []);
