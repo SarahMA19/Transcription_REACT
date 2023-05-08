@@ -1,7 +1,6 @@
 import React from "react";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
-import { BsFillCartFill } from 'react-icons/bs';
 import { FaUser } from 'react-icons/fa';
 
 
@@ -9,7 +8,7 @@ const SignInButton = ({ user, logout }) => {
     return (
         <div className="navbar-end">
             <p alt={user.displayName}></p>
-        <button className="btn btn-secondary" onClick={logout}>Sign out</button>
+        <a href="/" className="btn btn-secondary" onClick={logout}>Sign out</a>
       </div>
     );
   };
@@ -44,46 +43,29 @@ const Header = () => {
                         </ul>
                     </div>
                     <div className="navbar-end">
-                        <a href="/"><span className="pl-20"><BsFillCartFill size={32} /></span></a>
                         <div className="dropdown dropdown-end">
-
-
                             <a href="#!"><span className="pl-20"><FaUser size={32} /></span></a>
-
-
                             <ul tabIndex={0} className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
                                 <li>
-                                    <a className="justify-between">
+                                    <a href="/" className="justify-between">
                                         Profile
-                                        <span className="badge">New</span>
                                     </a>
                                 </li>
                                 <li><a>Settings</a></li>
                                 {user.loggedIn ? (
-                                    <SignInButton user={user} logout={logout} />
+                                    <SignInButton href="/" user={user} logout={logout} />
                                 ) : (
                                     <button className="btn btn-secondary mt-1 w-51 max-h-96 overflow-y-auto p-2 shadow rounded-box" onClick={login}>
                                         Get Started
                                     </button>
                                 )}
-                               
-            
                             </ul>
                         </div>
-
-
-
-
-
-
                     </div>
                 </div>
             </div>
         </header>
     )
-
-
-
 }
 
 export default Header

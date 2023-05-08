@@ -5,7 +5,7 @@ import Testimonal from "../components/Testimonal"
 import CTA from "../components/CTA"
 import Footer from "../components/Footer"
 
-const HomeView = () => {
+export default function HomeView() {
     return(
         <>
         <Nav />
@@ -19,4 +19,3 @@ const HomeView = () => {
     
 }
 
-export default HomeView;

@@ -4,9 +4,6 @@ import { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import upload from "../static/upload.jpg"
-
-import HomeView from "../views/HomeView";
-
 const UPLOAD_ENDPOINT = "http://127.0.0.1:5000/api/sasurl";
 const TRANSCRIPTION_ENDPOINT = "http://127.0.0.1:5000/api/transcription"
 
@@ -20,7 +17,6 @@ export default function UploadFile() {
 
 
     const { user } = useContext(AuthContext);
-    const [container_name, setContainer_name] = useState("");
     const [filename, setFilename] = useState("");
     const [status, setStatus] = useState("");
     const [file, setFile] = useState(null);
@@ -30,7 +26,7 @@ export default function UploadFile() {
         event.preventDefault();
         const formData = new FormData();
         formData.append("filename", filename);
-        formData.append("container_name", container_name);
+        formData.append("container_name", user.container_name);
         formData.append("uid", user.uid);
         const resp = await axios.post(UPLOAD_ENDPOINT, formData, {
             headers: {
@@ -48,7 +44,7 @@ export default function UploadFile() {
         const sasURL = `https://${STORAGE_ACCOUNT_NAME}.blob.core.windows.net?${resp.data}`;
         console.log(sasURL);
         const blobServiceClient = new BlobServiceClient(sasURL);
-        const containerClient = blobServiceClient.getContainerClient(container_name);
+        const containerClient = blobServiceClient.getContainerClient(user.container_name);
 
         const blockBlobClient = containerClient.getBlockBlobClient(filename);
         const uploadBlobResponse = blockBlobClient.uploadBrowserData(file);
@@ -59,7 +55,8 @@ export default function UploadFile() {
                 "Ocp-Apim-Subscription-Key": "5cb74fcedeb14edd8eee96bc0634288b",
                 "Content-Type": "application/json",
             },
-        }); setStatus(resp.status === 200 ? response.data : "Error.");
+        }); 
+        setStatus(resp.status === 200 ? window.location.reload(): "Error.");
 
     }
 
@@ -78,16 +75,12 @@ export default function UploadFile() {
                             <div className="flex">
                             <input type="file" accept=".wav" name="filename" className="file-input file-input-bordered file-input-secondary text-gray-900 w-full max-w-xs" onChange={(e) => { setFilename(e.target.files[0].name); setFile(e.target.files[0]) }} />
                             </div>
-                            <div className="flex py-4">
-                            <input type="text" placeholder="Type Here" className="file-input file-input-bordered file-input-secondary text-gray-900 w-full max-w-xs pl-2" onChange={(e) => setContainer_name(e.target.value)} value={container_name} />
-                            </div>
                             <br></br>
-                            <button type="submit" className="btn btn-active btn-secondary " active={(container_name)}>Submit</button>
+                            <button type="submit" className="btn btn-active btn-secondary">Submit</button>
                             {status ? <h1>{status}</h1> : null}
                         </form>
                         </div>
                     </div>
-                
             </div>
         </div>
     )

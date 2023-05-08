@@ -7,6 +7,7 @@ import axios from "axios";
 import { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa"
 import { FiEye } from "react-icons/fi"
+import { Link } from "react-router-dom"
 
 
 
@@ -18,7 +19,7 @@ export default function Table (){
   const {user} = useContext(AuthContext);
   console.log(user)
   const [transcriptions, setTranscriptions] = useState([]);
-  const id = transcriptions
+  
  
   
  
@@ -52,9 +53,9 @@ export default function Table (){
       }; console.log(user.uid)
 
       const res = await axios.delete(WEB_URL + "/api/transcriptions/" + id,  headers);
-      if (res.data.status === "ok"){const newTranscriptions = res.data.transcription;
-        console.log(newTranscriptions)
-        setTranscriptions(newTranscriptions)
+      if (res.data.status === "ok"){
+        window.location.reload();
+        
       }
       }
      
@@ -68,28 +69,22 @@ export default function Table (){
     <div>
       {transcriptions && transcriptions.map((transcription) => {
         return (
+          <div key={transcription.id} className="container">
           <div className="overflow-x-auto w-full">
             <table className="table w-full">
               {/* head */}
               <thead>
                 <tr>
-                  <th>Select</th>
                   <th>Filename</th>
                   <th>Date Transcribed</th>
                   <th>Results</th>
                   <th>See More</th>
                   <th>Delete</th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 {/* row 1 */}
                 <tr>
-                  <th>
-                    <label>
-                      <input type="checkbox" className="checkbox" />
-                    </label>
-                  </th>
                   <td>
                     <div className="font-bold">{transcription.filename}</div>
                   </td>
@@ -98,17 +93,32 @@ export default function Table (){
                   </td>
                   <td>{transcription.body}...</td>
                   <th>
-                    <button className="btn btn-ghost btn-md"><FiEye size={32} /></button>
+                    <label htmlFor="my-modal" className="btn btn-ghost btn-md"><FiEye size={32} /></label>
+                    {/* Put this part before </body> tag */}
+                    <input type="checkbox" id="my-modal" className="modal-toggle" />
+                    <div className="modal">
+                      <div className="modal-box">
+                        <h3 className="font-bold text-lg">Your transcription is ready!</h3>
+                        <p className="py-4">To see in full, you will need to pay</p>
+                        <div className="modal-action">
+                          <Link htmlFor="my-modal" className="btn" to="/checkout">Purchase Now</Link>
+                        </div>
+                      </div>
+                    </div>
                   </th>
                   <th>
                     <button className="btn btn-ghost btn-md" onClick={() => handleRemove(transcription.id)} ><FaTrashAlt size={32} /></button>
                   </th>
-               </tr>
+                </tr>
               </tbody>
             </table>
           </div>
+          </div>
         );
-          })}
+      })}
     </div>
-      );
-  };
+  );
+};
+
+
+  
