@@ -18,7 +18,12 @@ const Checkout = () => {
 
     const [clientSecret, setClientSecret] = useState("");
     const { cart } = useContext(DataContext);
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
+    const [data, setData] = useState('');
+
+    const handleDataChange = (newData) => {
+    setData(newData);
+    };
 
     useEffect( () => {
         // create payment intenet as soon as this componet FIRST renders
@@ -49,8 +54,12 @@ const Checkout = () => {
                 <Elements options={options} stripe={stripePromise}>
                     <CheckoutForm />
                 </Elements>
+               
             )}
+
+      
         </>
+        
       );
     
     

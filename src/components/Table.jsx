@@ -7,7 +7,7 @@ import axios from "axios";
 import { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa"
 import { FiEye } from "react-icons/fi"
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 
 
@@ -15,57 +15,82 @@ import { Link } from "react-router-dom"
 
 
 
-export default function Table (){
-  const {user} = useContext(AuthContext);
+
+
+
+export default function Table() {
+  const { user } = useContext(AuthContext);
   console.log(user)
   const [transcriptions, setTranscriptions] = useState([]);
+
   
- 
   
+
  
+
+
   async function tableInfo() {
 
-      const headers = {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-      }; console.log(user.uid)
+    const headers = {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    }; console.log(user.uid)
+
+    const res = await axios.get(WEB_URL + "/api/transcriptions?uid=" + user.uid, headers);
+    console.log(res);
+    if (res.data.status === "ok") {
+      const newTranscriptions = res.data.transcription;
+      console.log(newTranscriptions)
+      setTranscriptions(newTranscriptions)
+
+    }
+
+  };
+  useEffect(() => {
+    if (user.loggedIn) {
+      tableInfo()
+    }
+  }, [user]);
+
+  async function handleRemove(id) {
+    const headers = {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    }; console.log(user.uid)
+
+    const res = await axios.delete(WEB_URL + "/api/transcriptions/" + id, headers);
+    if (res.data.status === "ok") {
+      window.location.reload();
+
+    }
+  }
+
+
   
-      const res = await axios.get(WEB_URL + "/api/transcriptions?uid=" + user.uid, headers);
-        console.log(res);
-        if (res.data.status === "ok"){
-          const newTranscriptions = res.data.transcription;
-          console.log(newTranscriptions)
-          setTranscriptions(newTranscriptions)
+ 
+  async function getResults(id) {
+    const headers = {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    };
 
-        }
+    const res = await axios.get(WEB_URL + "/api/transcriptions/" + id, headers);
+    console.log(res)
+    if (res.status === 200) {
+      
+      
     
-      } ;
-      useEffect(() => {
-        if (user.loggedIn){
-          tableInfo()
-        }
-      }, [user]);
 
-      async function handleRemove(id){
-      const headers = {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      }; console.log(user.uid)
-
-      const res = await axios.delete(WEB_URL + "/api/transcriptions/" + id,  headers);
-      if (res.data.status === "ok"){
-        window.location.reload();
-        
-      }
-      }
-     
-
-      
+    }
+  }useEffect(() => {
+    const results = document.getElementById("wally");
+    results.innerText = res.data;
+    console.log(res.data)
+  }, [results]);
 
 
-      
 
-    return (
+  return (
     <div>
       {transcriptions && transcriptions.map((transcription) => {
         return (
@@ -77,6 +102,8 @@ export default function Table (){
                 <tr>
                   <th>Filename</th>
                   <th>Date Transcribed</th>
+                  <th>Audio Length (seconds)</th>
+                  <th> Total cost</th>
                   <th>Results</th>
                   <th>See More</th>
                   <th>Delete</th>
@@ -91,20 +118,19 @@ export default function Table (){
                   <td>
                     <div>{transcription.created_at}</div>
                   </td>
-                  <td>{transcription.body}...</td>
+                  <td>
+                    <div>{transcription.audio_length.toFixed(2)}</div>
+                  </td>
+                  <td>
+                    <div>${(transcription.audio_length.toFixed(2) * 0.05).toFixed(2)}</div>
+                  </td>  
+                  <td>
+                  <div>{transcription.body}...</div>
+                  </td>
                   <th>
-                    <label htmlFor="my-modal" className="btn btn-ghost btn-md"><FiEye size={32} /></label>
-                    {/* Put this part before </body> tag */}
-                    <input type="checkbox" id="my-modal" className="modal-toggle" />
-                    <div className="modal">
-                      <div className="modal-box">
-                        <h3 className="font-bold text-lg">Your transcription is ready!</h3>
-                        <p className="py-4">To see in full, you will need to pay</p>
-                        <div className="modal-action">
-                          <Link htmlFor="my-modal" className="btn" to="/checkout">Purchase Now</Link>
-                        </div>
-                      </div>
-                    </div>
+                   
+                    <Link to="/transcription" className="btn" onClick={()=> getResults(transcription.id)} ><FiEye size={32} /></Link>
+                      
                   </th>
                   <th>
                     <button className="btn btn-ghost btn-md" onClick={() => handleRemove(transcription.id)} ><FaTrashAlt size={32} /></button>
@@ -121,4 +147,3 @@ export default function Table (){
 };
 
 
-  

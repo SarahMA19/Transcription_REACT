@@ -1,25 +1,19 @@
 import React from "react";
 import axios from "axios";
-import { useState } from "react";
-import { useContext } from "react";
+import { useState, useContext} from "react";
 import { AuthContext } from "../context/AuthProvider";
 import upload from "../static/upload.jpg"
 const UPLOAD_ENDPOINT = "http://127.0.0.1:5000/api/sasurl";
 const TRANSCRIPTION_ENDPOINT = "http://127.0.0.1:5000/api/transcription"
 
 export default function UploadFile() {
-
-    
- 
-
-
-
-
-
     const { user } = useContext(AuthContext);
     const [filename, setFilename] = useState("");
     const [status, setStatus] = useState("");
     const [file, setFile] = useState(null);
+    const [duration, setDuration] = useState(0);
+
+    
 
     const handleSubmit = async (event) => {
         setStatus(""); // Reset status
@@ -27,7 +21,10 @@ export default function UploadFile() {
         const formData = new FormData();
         formData.append("filename", filename);
         formData.append("container_name", user.container_name);
-        formData.append("uid", user.uid);
+        formData.append("uid", user.uid)
+        formData.append("duration", duration)
+       
+
         const resp = await axios.post(UPLOAD_ENDPOINT, formData, {
             headers: {
                 "Ocp-Apim-Subscription-Key": "5cb74fcedeb14edd8eee96bc0634288b",
@@ -38,8 +35,6 @@ export default function UploadFile() {
 
         const { BlobServiceClient } = require("@azure/storage-blob");
         const STORAGE_ACCOUNT_NAME = 'audiofilesproject';
-
-
 
         const sasURL = `https://${STORAGE_ACCOUNT_NAME}.blob.core.windows.net?${resp.data}`;
         console.log(sasURL);
@@ -58,7 +53,26 @@ export default function UploadFile() {
         }); 
         setStatus(resp.status === 200 ? window.location.reload(): "Error.");
 
-    }
+        
+  };
+
+  function handleFileInputChange(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      const audio = new Audio(e.target.result);
+      audio.onloadedmetadata = function () {
+        setDuration(audio.duration);
+      };
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  
+
+    
 
 
     return (
@@ -72,8 +86,9 @@ export default function UploadFile() {
                         <br></br>
                         <br></br>
                         <form onSubmit={handleSubmit}>
-                            <div className="flex">
-                            <input type="file" accept=".wav" name="filename" className="file-input file-input-bordered file-input-secondary text-gray-900 w-full max-w-xs" onChange={(e) => { setFilename(e.target.files[0].name); setFile(e.target.files[0]) }} />
+                        <div className="flex">
+                            <input type="file" accept="audio/.wav" name="filename" className="file-input file-input-bordered file-input-secondary text-gray-900 w-full max-w-xs" onInput={handleFileInputChange} onChange={(e) => { setFilename(e.target.files[0].name); setFile(e.target.files[0])}} />
+                            {duration > 0 && <p>Duration: {duration.toFixed(2)} seconds</p>}
                             </div>
                             <br></br>
                             <button type="submit" className="btn btn-active btn-secondary">Submit</button>

@@ -5,7 +5,9 @@ import "../styles/stripeElements.css"
 import { Link } from "react-router-dom";
 
 
-const CheckoutForm = () => {
+
+
+const CheckoutForm = (filename, duration) => {
     const stripe = useStripe();
     const elements = useElements();
 
@@ -59,7 +61,10 @@ const CheckoutForm = () => {
                 <h4>{errorMessage}</h4>
                 </>
                 :
-                <h2> Payment Success!</h2>
+                <>
+                <h2>Thank you for your payment!</h2>
+                <Link to="/transcription"className="btn btn-secondary">Click Here to see transcription</Link>
+                </>
             }
         </div>
     )
