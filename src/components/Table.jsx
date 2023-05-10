@@ -89,9 +89,7 @@ export default function Table(props) {
 
   return (
         <div>
-          {transcriptions && transcriptions.map((transcription) => {
-            return (
-              <div key={transcription.id} className="container">
+              <div  className="container">
                 <div className="overflow-x-auto w-full">
                   <table className="table w-full">
                     {/* head */}
@@ -108,8 +106,9 @@ export default function Table(props) {
                     </thead>
                     <tbody>
                       {/* row 1 */}
-                      <tr>
-
+                      {transcriptions && transcriptions.map((transcription) => {
+                      return (
+                      <tr key={transcription.id}>
                         <td>
                           <div className="font-bold">{transcription.filename}</div>
                         </td>
@@ -134,12 +133,14 @@ export default function Table(props) {
                           <button className="btn btn-ghost btn-md" onClick={() => handleRemove(transcription.id)} ><FaTrashAlt size={32} /></button>
                         </th>
                       </tr>
+                      )
+                       })}
                     </tbody>
                   </table>
                 </div>
               </div>
-            );
-          })}
+            
+         
         </div>
       )
         };

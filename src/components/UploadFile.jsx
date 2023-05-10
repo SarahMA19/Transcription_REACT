@@ -4,9 +4,9 @@ import { useState, useContext} from "react";
 import { AuthContext } from "../context/AuthProvider";
 import upload from "../static/upload.jpg"
 import { toast } from "react-hot-toast";
-import { UPLOAD_ENDPOINT, TRANSCRIPTION_ENDPOINT } from "../lib/CONSTENTS";
-// const UPLOAD_ENDPOINT = "http://127.0.0.1:5000/api/sasurl";
-// const TRANSCRIPTION_ENDPOINT = "http://127.0.0.1:5000/api/transcription"
+// import { UPLOAD_ENDPOINT, TRANSCRIPTION_ENDPOINT } from "../lib/CONSTENTS";
+const UPLOAD_ENDPOINT = "http://127.0.0.1:5000/api/sasurl";
+const TRANSCRIPTION_ENDPOINT = "http://127.0.0.1:5000/api/transcription"
 
 export default function UploadFile() {
     const { user } = useContext(AuthContext);
@@ -52,14 +52,14 @@ export default function UploadFile() {
         const uploadBlobResponse = blockBlobClient.uploadBrowserData(file);
         console.log(`Upload block blob ${file.name} successfully`, uploadBlobResponse.clientRequestId);
 
-        await axios.post(TRANSCRIPTION_ENDPOINT, formData, {
+        const transcriptionPromise = await axios.post(TRANSCRIPTION_ENDPOINT, formData, {
             headers: {
                 "Ocp-Apim-Subscription-Key": "5cb74fcedeb14edd8eee96bc0634288b",
                 "Content-Type": "application/json",
             },
         }); 
-        setStatus(resp.status === 200 ? window.location.reload() : "Error.");
-        window.location.reload()
+        setStatus(resp.status === 200 ? window.location.reload() : 'error');
+        
         
     
 

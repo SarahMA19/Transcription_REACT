@@ -1,4 +1,4 @@
-form {
+/* form {
     width: 30vw;
     min-width: 500px;
     align-self: center;
@@ -48,7 +48,7 @@ form {
   } */
   
   /* spinner/processing state, errors */
-  .spinner,
+  /* .spinner,
   .spinner:before,
   .spinner:after {
     border-radius: 50%;
@@ -116,4 +116,4 @@ form {
       width: 80vw;
       min-width: initial;
     }
-  }
+  /* } */ 
