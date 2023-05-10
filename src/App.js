@@ -15,7 +15,7 @@ import Transcription from "./views/Transcription";
 
 
 function App() {
-  const [transcription, setTranscription] = useState([]);
+
   
   return (
     <div className="App">
@@ -27,10 +27,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeView />} />
           <Route path="/audio" element={<Audio />} />
-          <Route path="/checkout" element={<Checkout />}>
-           
-          </Route>
-          <Route path="/transcription" element={<Transcription />} />
+          <Route path="/checkout" element={<Checkout />}/>
+          <Route path="/transcription/:id" element={<Transcription />} />
         </Routes>
       
     </div>

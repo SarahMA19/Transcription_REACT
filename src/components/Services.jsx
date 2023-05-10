@@ -1,6 +1,7 @@
 import React from 'react';
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
+import { Link } from 'react-router-dom';
 
 const SignInButton = ({ user, logout }) => {
     return (
@@ -18,7 +19,7 @@ export default function Services () {
             <div className='container'>
                 <div className='text-center'>
                     <h2 className='text-3xl sm:text-5xl font-bold mb-4'> What We Do</h2>
-                    <p className='text-lg sm:text-2xl mb-6 md:mb-14'>Transcribe Audio to Text! Great resource for podcasts, interviews and academic reasearch.</p>
+                    <p className='text-lg sm:text-2xl mb-6 md:mb-14'>Audio to Text! Great resource for podcasts, interviews and academic research.</p>
                 </div>
 
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8 xl:gap-10'>
@@ -32,13 +33,8 @@ export default function Services () {
                                 supporting text below <br className='hidden xl:inline' />
                                 more text <br className='hidden xl:inline' />
                             </p>
-                            {user.loggedIn ? (
-                                <SignInButton user={user} logout={logout} />
-                            ) : (
-                                <button className="btn btn-secondary" onClick={login}>
-                                    Get Started
-                                </button>
-                            )}
+                            
+                        
                         </div>
                     </div>
 
@@ -51,13 +47,8 @@ export default function Services () {
                                 supporting text below <br className='hidden xl:inline' />
                                 more text <br className='hidden xl:inline' />
                             </p>
-                            {user.loggedIn ? (
-                                <SignInButton user={user} logout={logout} />
-                            ) : (
-                                <button className="btn btn-secondary" onClick={login}>
-                                    Get Started
-                                </button>
-                            )}
+                            
+                           
                         </div>
                     </div>
 
@@ -70,13 +61,7 @@ export default function Services () {
                                 supporting text below <br className='hidden xl:inline' />
                                 more text <br className='hidden xl:inline' />
                             </p>
-                            {user.loggedIn ? (
-                                <SignInButton user={user} logout={logout} />
-                            ) : (
-                                <button className="btn btn-secondary" onClick={login}>
-                                    Get Started
-                                </button>
-                            )}
+                          
                         </div>
                     </div>
 

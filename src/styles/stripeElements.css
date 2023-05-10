@@ -22,7 +22,7 @@ form {
   }
   
   /* Buttons and links */
-  button {
+  /* button {
     background: #5469d4;
     font-family: Arial, sans-serif;
     color: #ffffff;
@@ -45,7 +45,7 @@ form {
   button:disabled {
     opacity: 0.5;
     cursor: default;
-  }
+  } */
   
   /* spinner/processing state, errors */
   .spinner,

@@ -8,6 +8,7 @@ import { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa"
 import { FiEye } from "react-icons/fi"
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 
 
@@ -18,15 +19,11 @@ import { Link } from "react-router-dom";
 
 
 
-export default function Table() {
+export default function Table(props) {
   const { user } = useContext(AuthContext);
   console.log(user)
   const [transcriptions, setTranscriptions] = useState([]);
 
-  
-  
-
- 
 
 
   async function tableInfo() {
@@ -42,7 +39,9 @@ export default function Table() {
       const newTranscriptions = res.data.transcription;
       console.log(newTranscriptions)
       setTranscriptions(newTranscriptions)
-
+      
+      
+     
     }
 
   };
@@ -53,6 +52,7 @@ export default function Table() {
   }, [user]);
 
   async function handleRemove(id) {
+  
     const headers = {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
@@ -61,6 +61,7 @@ export default function Table() {
     const res = await axios.delete(WEB_URL + "/api/transcriptions/" + id, headers);
     if (res.data.status === "ok") {
       window.location.reload();
+      
 
     }
   }
@@ -68,82 +69,85 @@ export default function Table() {
 
   
  
-  async function getResults(id) {
-    const headers = {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-    };
+  // async function getResults(id) {
+  //   const headers = {
+  //     "Content-Type": "application/json",
+  //     "Access-Control-Allow-Origin": "*",
+  //   };
 
-    const res = await axios.get(WEB_URL + "/api/transcriptions/" + id, headers);
-    console.log(res)
-    if (res.status === 200) {
+  //   const res = await axios.get(WEB_URL + "/api/transcriptions/" + id, headers);
+  //   console.log(res)
+  //   if (res.status === 200)
       
-      
-    
 
-    }
-  }useEffect(() => {
-    const results = document.getElementById("wally");
-    results.innerText = res.data;
-    console.log(res.data)
-  }, [results]);
+  
+ 
 
 
 
   return (
-    <div>
-      {transcriptions && transcriptions.map((transcription) => {
-        return (
-          <div key={transcription.id} className="container">
-          <div className="overflow-x-auto w-full">
-            <table className="table w-full">
-              {/* head */}
-              <thead>
-                <tr>
-                  <th>Filename</th>
-                  <th>Date Transcribed</th>
-                  <th>Audio Length (seconds)</th>
-                  <th> Total cost</th>
-                  <th>Results</th>
-                  <th>See More</th>
-                  <th>Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                {/* row 1 */}
-                <tr>
-                  <td>
-                    <div className="font-bold">{transcription.filename}</div>
-                  </td>
-                  <td>
-                    <div>{transcription.created_at}</div>
-                  </td>
-                  <td>
-                    <div>{transcription.audio_length.toFixed(2)}</div>
-                  </td>
-                  <td>
-                    <div>${(transcription.audio_length.toFixed(2) * 0.05).toFixed(2)}</div>
-                  </td>  
-                  <td>
-                  <div>{transcription.body}...</div>
-                  </td>
-                  <th>
-                   
-                    <Link to="/transcription" className="btn" onClick={()=> getResults(transcription.id)} ><FiEye size={32} /></Link>
-                      
-                  </th>
-                  <th>
-                    <button className="btn btn-ghost btn-md" onClick={() => handleRemove(transcription.id)} ><FaTrashAlt size={32} /></button>
-                  </th>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
+        <div>
+          {transcriptions && transcriptions.map((transcription) => {
+            return (
+              <div key={transcription.id} className="container">
+                <div className="overflow-x-auto w-full">
+                  <table className="table w-full">
+                    {/* head */}
+                    <thead>
+                      <tr>
+                        <th>Filename</th>
+                        <th>Date Transcribed</th>
+                        <th>Audio Length (seconds)</th>
+                        <th>Total Cost</th>
+                        <th>Results</th>
+                        <th>See More</th>
+                        <th>Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {/* row 1 */}
+                      <tr>
+
+                        <td>
+                          <div className="font-bold">{transcription.filename}</div>
+                        </td>
+                        <td>
+                          <div>{moment(transcription.created_at).format("MMMM Do YYYY h:mm a")}</div>
+                        </td>
+                        <td>
+                          <div>{transcription.audio_length.toFixed(2)}</div>
+                        </td>
+                        <td>
+                          <div>${(transcription.audio_length.toFixed(2) * 0.07).toFixed(2)}</div>
+                        </td>
+                        <td>
+                          <div>{transcription.body}...</div>
+                        </td>
+                        <th>
+
+                          <Link to={`/transcription/${transcription.id}`} className="btn" ><FiEye size={32} /></Link>
+
+                        </th>
+                        <th>
+                          <button className="btn btn-ghost btn-md" onClick={() => handleRemove(transcription.id)} ><FaTrashAlt size={32} /></button>
+                        </th>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )
+        };
+  
+      
+  
+
+
+
+
+
 
 

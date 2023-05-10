@@ -13,6 +13,7 @@ export default function UploadFile() {
     const [file, setFile] = useState(null);
     const [duration, setDuration] = useState(0);
 
+
     
 
     const handleSubmit = async (event) => {
@@ -31,7 +32,9 @@ export default function UploadFile() {
                 "Content-Type": "application/json",
             },
         });
-        setStatus(resp.status === 200 ? "Thank you!" : "Error.");
+        setStatus(resp.status === 200 ? "Loading" : "Error.");
+        
+        
 
         const { BlobServiceClient } = require("@azure/storage-blob");
         const STORAGE_ACCOUNT_NAME = 'audiofilesproject';
@@ -52,6 +55,7 @@ export default function UploadFile() {
             },
         }); 
         setStatus(resp.status === 200 ? window.location.reload(): "Error.");
+    
 
         
   };
@@ -76,6 +80,7 @@ export default function UploadFile() {
 
 
     return (
+       
         <div className="container">
             <div className="hero h-96 md:h-[700px] rounded-box overflow-hidden my-4" style={{ backgroundImage: `url(${upload})` }}>
                 <div className="hero-overlay bg-opacity-60"></div>
@@ -88,11 +93,11 @@ export default function UploadFile() {
                         <form onSubmit={handleSubmit}>
                         <div className="flex">
                             <input type="file" accept="audio/.wav" name="filename" className="file-input file-input-bordered file-input-secondary text-gray-900 w-full max-w-xs" onInput={handleFileInputChange} onChange={(e) => { setFilename(e.target.files[0].name); setFile(e.target.files[0])}} />
-                            {duration > 0 && <p>Duration: {duration.toFixed(2)} seconds</p>}
+                            
                             </div>
                             <br></br>
                             <button type="submit" className="btn btn-active btn-secondary">Submit</button>
-                            {status ? <h1>{status}</h1> : null}
+                            {status ? <progress className="btn-loading progress w-56g">{status}</progress> : null}
                         </form>
                         </div>
                     </div>

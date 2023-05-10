@@ -18,14 +18,13 @@ export default function CTA() {
         <section className='py-12 md:py-24'>
             <div className='container'>
                 <div className='flex felx-col md:flex-row justify-center items-center gap-6 text-center md:text-left'>
-                    <span className='flex-grow text-4xl md:text-5xl 2xl:text-6xl font-bold text-primary'>Let's make something <br className='hidden sm:inline' />
+                    <span className='flex-grow text-4xl md:text-5xl 2xl:text-6xl font-bold text-primary ml-20'>Let's make something <br className='hidden sm:inline' />
                         great together.
-
                     </span>
                     {user.loggedIn ? (
                         <SignInButton user={user} logout={logout} />
                     ) : (
-                        <button className="btn btn-secondary" onClick={login}>
+                        <button className="btn btn-secondary mr-20" onClick={login}>
                             Get Started
                         </button>
                     )}

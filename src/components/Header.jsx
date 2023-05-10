@@ -33,7 +33,7 @@ const Header = () => {
                                 <li><a href="#!">Support</a></li>
                             </ul>
                         </div>
-                        <a href="/" className="btn btn-ghost normal-case text-2xl">BRAND NAME</a>
+                        <a href="/" className="btn btn-ghost normal-case text-2xl">ScriptSmith</a>
                     </div>
                     <div className="navbar-center hidden lg:flex">
                         <ul className="menu menu-horizontal p-0 font-medium">
