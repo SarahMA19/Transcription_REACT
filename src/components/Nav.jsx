@@ -26,9 +26,9 @@ const Nav = () => {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
               </label>
               <ul tabIndex={0} className="dropdown-content mt-1 w-52 menu menu-compact p-2 bg-base-200 shadow rounded-box">
-                <li><a href="#!">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a href="/audio">Services</a></li>
-                <li><a href="#!">About</a></li>
+                <li><a href="/">About</a></li>
               </ul>
             </div>
             <a href="/" className="btn btn-ghost normal-case text-2xl">ScriptSmith</a>

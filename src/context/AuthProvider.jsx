@@ -29,20 +29,7 @@ export const AuthProvider = ({ children }) => {
   } );
 
   
-  // setPersistence(auth, browserSessionPersistence)
-  //   .then(() => {
-  //     // Existing and future Auth states are now persisted in the current
-  //     // session only. Closing the window would clear any existing state even
-  //     // if a user forgets to sign out.
-  //     // ...
-  //     // New sign-in will be persisted with session persistence.
-  //     return signInWithPopup(auth);
-  //   })
-  //   .catch((error) => {
-  //     // Handle Errors here.
-  //     const errorCode = error.code;
-  //     const errorMessage = error.message;
-  //   });
+ 
 
   async function postLogin(user) {
     const body = {
@@ -59,6 +46,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const res = await axios.post(WEB_URL + '/api/users', body, headers);
+    user.container_name = res.data.user.container_name
     console.log("After sign in: ", user);
     console.log(res);
   }
@@ -95,6 +83,7 @@ export const AuthProvider = ({ children }) => {
           displayName: userInfo.displayName,
           loggedIn: true,
           email: userInfo.email,
+          container_name: userInfo.container_name
         });console.log(user)
       } else {
         setUser({

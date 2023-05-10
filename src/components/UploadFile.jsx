@@ -3,8 +3,10 @@ import axios from "axios";
 import { useState, useContext} from "react";
 import { AuthContext } from "../context/AuthProvider";
 import upload from "../static/upload.jpg"
-const UPLOAD_ENDPOINT = "http://127.0.0.1:5000/api/sasurl";
-const TRANSCRIPTION_ENDPOINT = "http://127.0.0.1:5000/api/transcription"
+import { toast } from "react-hot-toast";
+import { UPLOAD_ENDPOINT, TRANSCRIPTION_ENDPOINT } from "../lib/CONSTENTS";
+// const UPLOAD_ENDPOINT = "http://127.0.0.1:5000/api/sasurl";
+// const TRANSCRIPTION_ENDPOINT = "http://127.0.0.1:5000/api/transcription"
 
 export default function UploadFile() {
     const { user } = useContext(AuthContext);
@@ -18,12 +20,14 @@ export default function UploadFile() {
 
     const handleSubmit = async (event) => {
         setStatus(""); // Reset status
+        
+
         event.preventDefault();
         const formData = new FormData();
         formData.append("filename", filename);
-        formData.append("container_name", user.container_name);
-        formData.append("uid", user.uid)
-        formData.append("duration", duration)
+        formData.append("container_name", "6e636747-11f0-49d8-8d49-f84f0a78a6c9");
+        formData.append("uid", user.uid);
+        formData.append("duration", duration);
        
 
         const resp = await axios.post(UPLOAD_ENDPOINT, formData, {
@@ -42,19 +46,21 @@ export default function UploadFile() {
         const sasURL = `https://${STORAGE_ACCOUNT_NAME}.blob.core.windows.net?${resp.data}`;
         console.log(sasURL);
         const blobServiceClient = new BlobServiceClient(sasURL);
-        const containerClient = blobServiceClient.getContainerClient(user.container_name);
+        const containerClient = blobServiceClient.getContainerClient("6e636747-11f0-49d8-8d49-f84f0a78a6c9");
 
         const blockBlobClient = containerClient.getBlockBlobClient(filename);
         const uploadBlobResponse = blockBlobClient.uploadBrowserData(file);
         console.log(`Upload block blob ${file.name} successfully`, uploadBlobResponse.clientRequestId);
 
-        const response = await axios.post(TRANSCRIPTION_ENDPOINT, formData, {
+        await axios.post(TRANSCRIPTION_ENDPOINT, formData, {
             headers: {
                 "Ocp-Apim-Subscription-Key": "5cb74fcedeb14edd8eee96bc0634288b",
                 "Content-Type": "application/json",
             },
         }); 
-        setStatus(resp.status === 200 ? window.location.reload(): "Error.");
+        setStatus(resp.status === 200 ? window.location.reload() : "Error.");
+        window.location.reload()
+        
     
 
         
@@ -74,6 +80,9 @@ export default function UploadFile() {
     reader.readAsDataURL(file);
   }
 
+ 
+
+
   
 
     
@@ -91,13 +100,14 @@ export default function UploadFile() {
                         <br></br>
                         <br></br>
                         <form onSubmit={handleSubmit}>
-                        <div className="flex">
-                            <input type="file" accept="audio/.wav" name="filename" className="file-input file-input-bordered file-input-secondary text-gray-900 w-full max-w-xs" onInput={handleFileInputChange} onChange={(e) => { setFilename(e.target.files[0].name); setFile(e.target.files[0])}} />
-                            
+                        <div className="flex-center">
+                            <input type="file" accept=".wav, .mp3" name="filename" className="file-input file-input-bordered file-input-secondary text-gray-900 w-full max-w-xs" onInput={handleFileInputChange} onChange={(e) => { setFilename(e.target.files[0].name); setFile(e.target.files[0])}} />
                             </div>
                             <br></br>
                             <button type="submit" className="btn btn-active btn-secondary">Submit</button>
-                            {status ? <progress className="btn-loading progress w-56g">{status}</progress> : null}
+                            <br></br>
+                            {status ? <progress className="progress w-56">{status}</progress> : null}
+                          
                         </form>
                         </div>
                     </div>

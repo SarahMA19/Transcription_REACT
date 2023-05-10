@@ -9,6 +9,7 @@ import { FaTrashAlt } from "react-icons/fa"
 import { FiEye } from "react-icons/fi"
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { toast } from "react-hot-toast";
 
 
 
@@ -51,6 +52,13 @@ export default function Table(props) {
     }
   }, [user]);
 
+
+
+
+
+
+
+  
   async function handleRemove(id) {
   
     const headers = {
@@ -60,24 +68,18 @@ export default function Table(props) {
 
     const res = await axios.delete(WEB_URL + "/api/transcriptions/" + id, headers);
     if (res.data.status === "ok") {
-      window.location.reload();
+      toast.success("Deleted Sucessfully")
+      setTimeout("window.location='/audio'",2000);
       
-
+      
     }
+
+    
   }
 
 
   
- 
-  // async function getResults(id) {
-  //   const headers = {
-  //     "Content-Type": "application/json",
-  //     "Access-Control-Allow-Origin": "*",
-  //   };
 
-  //   const res = await axios.get(WEB_URL + "/api/transcriptions/" + id, headers);
-  //   console.log(res)
-  //   if (res.status === 200)
       
 
   
@@ -115,10 +117,10 @@ export default function Table(props) {
                           <div>{moment(transcription.created_at).format("MMMM Do YYYY h:mm a")}</div>
                         </td>
                         <td>
-                          <div>{transcription.audio_length.toFixed(2)}</div>
+                          <div>{Math.round(transcription.audio_length)}</div>
                         </td>
                         <td>
-                          <div>${(transcription.audio_length.toFixed(2) * 0.07).toFixed(2)}</div>
+                          <div>${(Math.round(transcription.audio_length)* 0.07).toFixed(2)}</div>
                         </td>
                         <td>
                           <div>{transcription.body}...</div>

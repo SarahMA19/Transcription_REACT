@@ -32,7 +32,7 @@ const CheckoutForm = (filename, duration) => {
         // make the api call to confirm payment to stripe
         const data = await stripe.confirmPayment({
             elements,
-            redirect : 'if_required'
+            redirect: 'if_required'
         });
         console.log('payment intent received', data);
         if (data['error']) {
@@ -46,25 +46,25 @@ const CheckoutForm = (filename, duration) => {
     return (
         <div className="container">
             {
-                showForm === true?
-                <form id="payment-form" onSubmit={handlePay}>
-                    <PaymentElement id="payment-element"></PaymentElement>
-                    <button  id="submit" disabled={!showPay || !elements || !stripe} className="btn btn-primary m-auto">
-                        <span id="btn-text">
-                            {showPay ? 'Submit Payment' : 'Processing . . .'}
-                        </span>
-                    </button>
-                </form>
-                : showForm === 'error' ?
-                <>
-                <h3>Something went wrong processing your payment please try again!</h3>
-                <h4>{errorMessage}</h4>
-                </>
-                :
-                <>
-                <h2>Thank you for your payment!</h2>
-                <Link to="/transcription"className="btn btn-secondary">Click Here to see transcription</Link>
-                </>
+                showForm === true ?
+                    <form id="payment-form" onSubmit={handlePay}>
+                        <PaymentElement id="payment-element"></PaymentElement>
+                        <button id="submit" disabled={!showPay || !elements || !stripe} className="btn btn-primary m-auto">
+                            <span id="btn-text">
+                                {showPay ? 'Submit Payment' : 'Processing . . .'}
+                            </span>
+                        </button>
+                    </form>
+                    : showForm === 'error' ?
+                        <>
+                            <h3>Something went wrong processing your payment please try again!</h3>
+                            <h4>{errorMessage}</h4>
+                        </>
+                        :
+                        <>
+                            <h2>Thank you for your payment!</h2>
+                            <Link to="/transcription" className="btn btn-secondary">Click Here to see transcription</Link>
+                        </>
             }
         </div>
     )

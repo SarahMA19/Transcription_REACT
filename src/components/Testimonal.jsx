@@ -23,7 +23,7 @@ export default function Testimonal() {
                     <div className='flex items-center'>
                       <div className="avatar flex-shrink-0">
                         <div className="w-16 rounded-full border-2 border-white">
-                          <img src={image1} />
+                          <img src={image1} alt="Betty Boo" />
                         </div>
                       </div>
 
@@ -33,7 +33,7 @@ export default function Testimonal() {
                       </div>
                     </div>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum aliquid quo eum quae quos illo earum ipsa doloribus nostrum minus libero aspernatur laborum cum, a suscipit, ratione ea totam ullam! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto laboriosam deleniti aperiam ab veniam sint non cumque quis tempore cupiditate. Sint libero voluptas veniam at reprehenderit, veritatis harum et rerum.
+                    "As a podcaster, finding a reliable transcription service was crucial for me. I tried several options, but this one stood out. The quality of their transcriptions is outstanding, and their customer support is top-notch. They truly understand the needs of podcasters. I'm a satisfied customer!"
                     </p>
                   </div>
                 </div>
@@ -49,7 +49,7 @@ export default function Testimonal() {
                     <div className='flex items-center'>
                       <div className="avatar flex-shrink-0">
                         <div className="w-16 rounded-full border-2 border-white">
-                          <img src={image2} />
+                          <img src={image2} alt="Adam Wathan" />
                         </div>
                       </div>
 
@@ -59,7 +59,7 @@ export default function Testimonal() {
                       </div>
                     </div>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto laboriosam deleniti aperiam ab veniam sint non cumque quis tempore cupiditate. Sint libero voluptas veniam at reprehenderit, veritatis harum et rerum.
+                    "I am grateful to have found this transcription service for my pastoral work. Their transcriptions are precise, and they capture the nuances of my teachings. It has made it easier for me to create study guides and share sermon transcripts with my congregation. The service is dependable, and the team is supportive. Thank you!"
                     </p>
                   </div>
                 </div>
@@ -75,7 +75,7 @@ export default function Testimonal() {
                     <div className='flex items-center'>
                       <div className="avatar flex-shrink-0">
                         <div className="w-16 rounded-full border-2 border-white">
-                          <img src={image3} />
+                          <img src={image3} alt="Wendy Lou" />
                         </div>
                       </div>
 
@@ -85,7 +85,7 @@ export default function Testimonal() {
                       </div>
                     </div>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto laboriosam deleniti aperiam ab veniam sint non cumque quis tempore cupiditate. Sint libero voluptas veniam at reprehenderit, veritatis harum et rerum.
+                    "I discovered this transcription service when I needed to transcribe my kids' adorable conversations and funny anecdotes. The transcriptions are spot-on, and they bring those special moments to life in written form. It's a fantastic way to cherish and share these memories with family and friends. Highly recommended for all moms!" 
                     </p>
                   </div>
                 </div>
