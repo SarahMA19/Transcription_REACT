@@ -46,7 +46,7 @@ export default function Services () {
                             <h2 className='card-title'>Translation </h2>
                             <p>
                                 Bridging language barriers with transcription and translation <br className='hidden xl:inline' />
-                                Comprehensive transcription and translation expertise in one package" <br className='hidden xl:inline' />
+                                Comprehensive transcription and translation expertise in one package<br className='hidden xl:inline' />
                             </p>
                           
                         </div>

@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthProvider";
 import upload from "../static/upload.jpg"
 import { UPLOAD_ENDPOINT,TRANSCRIPTION_ENDPOINT } from "../lib/CONSTENTS";
 
-// import { UPLOAD_ENDPOINT, TRANSCRIPTION_ENDPOINT } from "../lib/CONSTENTS";
+
 // const UPLOAD_ENDPOINT = "http://127.0.0.1:5000/api/sasurl";
 // const TRANSCRIPTION_ENDPOINT = "http://127.0.0.1:5000/api/transcription"
 
